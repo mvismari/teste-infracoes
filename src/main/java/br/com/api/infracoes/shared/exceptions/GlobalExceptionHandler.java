@@ -1,5 +1,6 @@
 package br.com.api.infracoes.shared.exceptions;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

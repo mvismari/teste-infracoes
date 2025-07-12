@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/equipments", "/equipments/**", "/error").permitAll());
+                        .requestMatchers("/equipments", "/equipments/**", "/error", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**").permitAll());
                        /* .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
         return http.build();
