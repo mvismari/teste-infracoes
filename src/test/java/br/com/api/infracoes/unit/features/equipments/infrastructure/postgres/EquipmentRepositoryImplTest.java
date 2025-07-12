@@ -37,7 +37,6 @@ public class EquipmentRepositoryImplTest {
     private MapperJpa mapperJpa;
 
     private Equipment equipment;
-    private Equipment equipment2;
     private EquipmentEntity equipmentEntity;
     private EquipmentEntity equipmentEntity2;
 
@@ -59,7 +58,7 @@ public class EquipmentRepositoryImplTest {
         equipment.setModel(EQP_MODEL);
         equipment.setAddress(EQP_ADDR);
 
-        equipment2 = new Equipment();
+        Equipment equipment2 = new Equipment();
         equipment2.setSerial(EQP2_SERIAL);
         equipment2.setModel(EQP_MODEL);
         equipment2.setAddress(EQP_ADDR);
