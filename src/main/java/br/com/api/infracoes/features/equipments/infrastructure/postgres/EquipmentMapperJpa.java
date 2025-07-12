@@ -1,10 +1,10 @@
 package br.com.api.infracoes.features.equipments.infrastructure.postgres;
 
-import br.com.api.infracoes.features.equipments.domain.Equipment;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MapperJpa {
+public class EquipmentMapperJpa {
 
     public EquipmentEntity toEntity(Equipment domain) {
         EquipmentEntity entity = new EquipmentEntity();

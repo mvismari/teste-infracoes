@@ -1,10 +1,10 @@
 package br.com.api.infracoes.unit.features.equipments.infrastructure.postgres;
 
-import br.com.api.infracoes.features.equipments.domain.Equipment;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentEntity;
 import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentJpaRepository;
+import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentMapperJpa;
 import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentRepositoryImpl;
-import br.com.api.infracoes.features.equipments.infrastructure.postgres.MapperJpa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class EquipmentRepositoryImplTest {
     private EquipmentJpaRepository equipmentJpaRepository;
 
     @Mock
-    private MapperJpa mapperJpa;
+    private EquipmentMapperJpa equipmentMapperJpa;
 
     private Equipment equipment;
     private EquipmentEntity equipmentEntity;
@@ -77,11 +77,11 @@ public class EquipmentRepositoryImplTest {
     @Test
     @DisplayName("Deveria salvar o equipamento (Infrastructure/Postgres)")
     void save_ShouldSaveEquipment() {
-        when(mapperJpa.toEntity(equipment))
+        when(equipmentMapperJpa.toEntity(equipment))
                 .thenReturn(equipmentEntity);
 
         equipmentRepository.save(equipment);
-        verify(mapperJpa).toEntity(equipment);
+        verify(equipmentMapperJpa).toEntity(equipment);
         verify(equipmentJpaRepository).save(equipmentEntity);
     }
 
@@ -89,7 +89,7 @@ public class EquipmentRepositoryImplTest {
     @DisplayName("Deveria retornar excessão por constraint de banco. (Infrastructure/Postgres)")
     void save_WhenSaveDuplicated_ShouldReturnException() {
 
-        when(mapperJpa.toEntity(equipment))
+        when(equipmentMapperJpa.toEntity(equipment))
                 .thenReturn(equipmentEntity);
 
         when(equipmentJpaRepository.save(equipmentEntity))
@@ -99,7 +99,7 @@ public class EquipmentRepositoryImplTest {
             equipmentRepository.save(equipment);
         });
 
-        verify(mapperJpa).toEntity(equipment);
+        verify(equipmentMapperJpa).toEntity(equipment);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class EquipmentRepositoryImplTest {
         when(equipmentJpaRepository.findById(EQP_SERIAL))
                 .thenReturn(Optional.of(equipmentEntity));
 
-        when(mapperJpa.toDomain(equipmentEntity))
+        when(equipmentMapperJpa.toDomain(equipmentEntity))
                 .thenReturn(equipment);
 
         Equipment result = equipmentRepository.findBySerial(EQP_SERIAL);
@@ -116,7 +116,7 @@ public class EquipmentRepositoryImplTest {
         assertNotNull(result);
         assertEquals(equipment, result);
         verify(equipmentJpaRepository).findById(EQP_SERIAL);
-        verify(mapperJpa).toDomain(equipmentEntity);
+        verify(equipmentMapperJpa).toDomain(equipmentEntity);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class EquipmentRepositoryImplTest {
 
         assertNull(result);
         verify(equipmentJpaRepository).findById(EQP_SERIAL);
-        verify(mapperJpa, never()).toDomain(any());
+        verify(equipmentMapperJpa, never()).toDomain(any());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class EquipmentRepositoryImplTest {
         Page<EquipmentEntity> page = new PageImpl<>(list, pageable, EXPECTED_TOTAL_ELEMENTS);
 
         when(equipmentJpaRepository.findAll(pageable)).thenReturn(page);
-        when(mapperJpa.toDomain(equipmentEntity))
+        when(equipmentMapperJpa.toDomain(equipmentEntity))
                 .thenReturn(equipment);
 
         Page<Equipment> equipments = equipmentRepository.findAll(PAGE_NUMBER, PAGE_SIZE);
@@ -149,7 +149,7 @@ public class EquipmentRepositoryImplTest {
         assertEquals(EXPECTED_TOTAL_ELEMENTS, equipments.getContent().size());
 
         verify(equipmentJpaRepository, times(1)).findAll(pageable);
-        verify(mapperJpa, times(1)).toDomain(equipmentEntity);
+        verify(equipmentMapperJpa, times(1)).toDomain(equipmentEntity);
     }
 
     @Test

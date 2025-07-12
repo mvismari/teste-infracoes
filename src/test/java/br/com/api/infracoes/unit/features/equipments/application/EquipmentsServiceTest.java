@@ -1,10 +1,10 @@
 package br.com.api.infracoes.unit.features.equipments.application;
 
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
-import br.com.api.infracoes.features.equipments.domain.Equipment;
-import br.com.api.infracoes.features.equipments.domain.EquipmentRepository;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
+import br.com.api.infracoes.shared.domain.repositories.EquipmentRepository;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
-import br.com.api.infracoes.features.equipments.exception.EquipmentExistsException;
+import br.com.api.infracoes.features.equipments.exceptions.EquipmentExistsException;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
 import br.com.api.infracoes.shared.util.MessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;

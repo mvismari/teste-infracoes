@@ -1,5 +1,6 @@
-package br.com.api.infracoes.features.equipments.domain;
+package br.com.api.infracoes.shared.domain.repositories;
 
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import org.springframework.data.domain.Page;
 
 public interface EquipmentRepository {

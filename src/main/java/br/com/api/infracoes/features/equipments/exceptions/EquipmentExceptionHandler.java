@@ -1,4 +1,4 @@
-package br.com.api.infracoes.features.equipments.exception;
+package br.com.api.infracoes.features.equipments.exceptions;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;

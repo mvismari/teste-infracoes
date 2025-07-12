@@ -1,9 +1,9 @@
 package br.com.api.infracoes.unit.features.equipments.web;
 
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
-import br.com.api.infracoes.features.equipments.domain.Equipment;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
-import br.com.api.infracoes.features.equipments.exception.EquipmentExistsException;
+import br.com.api.infracoes.features.equipments.exceptions.EquipmentExistsException;
 import br.com.api.infracoes.features.equipments.controller.EquipmentsController;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
 import org.junit.jupiter.api.BeforeEach;

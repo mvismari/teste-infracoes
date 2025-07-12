@@ -5,7 +5,7 @@ import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentFindAll;
 import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentFindBySerial;
 import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentSave;
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
-import br.com.api.infracoes.features.equipments.domain.Equipment;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
 import br.com.api.infracoes.shared.annotations.PageParam;
 import br.com.api.infracoes.shared.annotations.SizeParam;

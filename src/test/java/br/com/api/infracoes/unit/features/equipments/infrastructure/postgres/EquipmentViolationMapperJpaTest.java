@@ -1,8 +1,8 @@
 package br.com.api.infracoes.unit.features.equipments.infrastructure.postgres;
 
-import br.com.api.infracoes.features.equipments.domain.Equipment;
+import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentEntity;
-import br.com.api.infracoes.features.equipments.infrastructure.postgres.MapperJpa;
+import br.com.api.infracoes.features.equipments.infrastructure.postgres.EquipmentMapperJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,10 +15,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class MapperJpaTest {
+public class EquipmentViolationMapperJpaTest {
 
     @InjectMocks
-    private MapperJpa mapperJpa;
+    private EquipmentMapperJpa equipmentMapperJpa;
 
     private final static String EQP_SERIAL = "EQUIP-TEST";
     private final static String EQP_MODEL = "Modelo";
@@ -30,7 +30,7 @@ public class MapperJpaTest {
     @DisplayName("Deve converter Domínio para Entidade.")
     void toEntity_WithAllRequiredFields_ShouldBeValid() {
         Equipment equipment = createValidEquipment();
-        EquipmentEntity equipmentEntity = mapperJpa.toEntity(equipment);
+        EquipmentEntity equipmentEntity = equipmentMapperJpa.toEntity(equipment);
 
         assertEquals(equipmentEntity.getSerial(), equipment.getSerial());
         assertEquals(equipmentEntity.getModel(), equipment.getModel());
@@ -44,7 +44,7 @@ public class MapperJpaTest {
     @DisplayName("Deve converter Entidade para Domínio.")
     void toDomain_WithAllRequiredFields_ShouldBeValid() {
         EquipmentEntity equipmentEntity = createValidEquipmentEntity();
-        Equipment equipment = mapperJpa.toDomain(equipmentEntity);
+        Equipment equipment = equipmentMapperJpa.toDomain(equipmentEntity);
 
         assertEquals(equipmentEntity.getSerial(), equipment.getSerial());
         assertEquals(equipmentEntity.getModel(), equipment.getModel());

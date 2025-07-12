@@ -3,6 +3,7 @@ package br.com.api.infracoes.features.violations.dto;
 import br.com.api.infracoes.features.violations.annotations.ConditionalVelocity;
 import br.com.api.infracoes.features.violations.annotations.ValidFile;
 import br.com.api.infracoes.features.violations.annotations.ValidateType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -34,6 +35,7 @@ public class CreateViolationRequestDto {
     private Double regulatedSpeed;
 
     @ValidFile(message = "{violation.file.invalid-format}")
+    @JsonIgnore
     private MultipartFile picture;
 
     @NotNull(message = "{violation.type.required}")

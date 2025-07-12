@@ -1,4 +1,4 @@
-package br.com.api.infracoes.features.equipments.domain;
+package br.com.api.infracoes.shared.domain.entities;
 
 import lombok.Data;
 
