@@ -1,4 +1,4 @@
-package br.com.api.infracoes.features.equipments.web;
+package br.com.api.infracoes.features.equipments.controller;
 
 import br.com.api.infracoes.features.equipments.annotations.SerialParam;
 import br.com.api.infracoes.features.equipments.annotations.docs.DocSwaggerFindAll;

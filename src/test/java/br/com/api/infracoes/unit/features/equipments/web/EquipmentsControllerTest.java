@@ -4,7 +4,7 @@ import br.com.api.infracoes.features.equipments.application.EquipmentsService;
 import br.com.api.infracoes.features.equipments.domain.Equipment;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
 import br.com.api.infracoes.features.equipments.exception.EquipmentExistsException;
-import br.com.api.infracoes.features.equipments.web.EquipmentsController;
+import br.com.api.infracoes.features.equipments.controller.EquipmentsController;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

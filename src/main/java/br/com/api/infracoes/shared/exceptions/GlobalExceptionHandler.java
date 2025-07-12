@@ -2,6 +2,7 @@ package br.com.api.infracoes.shared.exceptions;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundErrorException.class)
     public ResponseEntity<Void> handleNotFound() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        return Map.of("error", e.getMessage());
     }
 
 }

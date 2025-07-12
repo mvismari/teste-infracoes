@@ -1,4 +1,4 @@
-package br.com.api.infracoes.features.violations.web;
+package br.com.api.infracoes.features.violations.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
