@@ -49,7 +49,6 @@ public class EquipmentsServiceTest {
     private static final int PAGE_NUMBER = 1;
     private static final int PAGE_SIZE = 5;
     private static final int EXPECTED_TOTAL_ELEMENTS = 2;
-    private static final int EXPECTED_TOTAL_PAGES = 1;
 
     private final static String EQP_SERIAL = "EQUIP-TEST";
     private final static String EQP_MODEL = "Modelo";
@@ -117,13 +116,13 @@ public class EquipmentsServiceTest {
         List<Equipment> list = List.of(eqp1, eqp2);
         Pageable pageable = PageRequest.of(PAGE_NUMBER, PAGE_SIZE);
         Page<Equipment> page = new PageImpl<>(list, pageable, EXPECTED_TOTAL_ELEMENTS);
-        when(equipmentRepository.findAll(pageable)).thenReturn(page);
-        Page<Equipment> equipments = equipmentsService.findAll(pageable);
+        when(equipmentRepository.findAll(PAGE_NUMBER, PAGE_SIZE)).thenReturn(page);
+        Page<Equipment> equipments = equipmentsService.findAll(PAGE_NUMBER, PAGE_SIZE);
         assertNotNull(equipments);
         assertEquals(EXPECTED_TOTAL_ELEMENTS, equipments.getContent().size());
         assertEquals(EQP1_SERIAL, equipments.getContent().get(0).getSerial());
         assertEquals(EQP2_SERIAL, equipments.getContent().get(1).getSerial());
-        verify(equipmentRepository, times(1)).findAll(pageable);
+        verify(equipmentRepository, times(1)).findAll(PAGE_NUMBER, PAGE_SIZE);
     }
 
 

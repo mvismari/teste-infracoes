@@ -35,6 +35,9 @@ public class EquipmentsControllerTest {
     private Equipment equipment1;
     private Equipment equipment2;
 
+    private static final int PAGE_NUMBER = 1;
+    private static final int PAGE_SIZE = 5;
+
     @Mock
     private EquipmentsService equipmentsService;
 
@@ -89,10 +92,10 @@ public class EquipmentsControllerTest {
     @DisplayName("Deveria retornar uma lista de equipamentos, caso existe pelo menos um.")
     void shouldReturnListOfEquipmentsIfExists() {
         List<Equipment> list = List.of(equipment1, equipment2);
-        Pageable pageable = PageRequest.of(1, 5);
+        Pageable pageable = PageRequest.of(0, 10);
         Page<Equipment> page = new PageImpl<>(list, pageable, 2);
 
-        when(equipmentsService.findAll(pageable)).thenReturn(page);
+        when(equipmentsService.findAll(PAGE_NUMBER, PAGE_SIZE)).thenReturn(page);
         ResponseEntity<Page<Equipment>> response = equipmentsController.findAll(1, 5);
 
         assertNotNull(response);
@@ -102,12 +105,7 @@ public class EquipmentsControllerTest {
         assertNotNull(responseBody);
         assertEquals(2, responseBody.getContent().size());
 
-        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(equipmentsService).findAll(pageableCaptor.capture());
-
-        Pageable capturedPageable = pageableCaptor.getValue();
-        assertEquals(1, capturedPageable.getPageNumber());
-        assertEquals(5, capturedPageable.getPageSize());
+        verify(equipmentsService).findAll(PAGE_NUMBER, PAGE_SIZE);
     }
 
     @Test
@@ -117,7 +115,7 @@ public class EquipmentsControllerTest {
         Pageable pageable = PageRequest.of(1, 5);
         Page<Equipment> page = new PageImpl<>(list, pageable, 0);
 
-        when(equipmentsService.findAll(pageable)).thenReturn(page);
+        when(equipmentsService.findAll(PAGE_NUMBER, PAGE_SIZE)).thenReturn(page);
         ResponseEntity<Page<Equipment>> response = equipmentsController.findAll(1, 5);
 
         assertNotNull(response);
@@ -131,7 +129,7 @@ public class EquipmentsControllerTest {
         assertEquals(5, responseBody.getSize());
 
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(equipmentsService).findAll(pageableCaptor.capture());
+        verify(equipmentsService).findAll(PAGE_NUMBER, PAGE_SIZE);
     }
 
     @Test

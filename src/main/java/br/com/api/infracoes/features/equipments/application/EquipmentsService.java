@@ -9,7 +9,6 @@ import br.com.api.infracoes.shared.util.MessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +28,8 @@ public class EquipmentsService {
         equipmentRepository.save(equipment);
     }
 
-    public Page<Equipment> findAll(Pageable pageable) {
-        return equipmentRepository.findAll(pageable);
+    public Page<Equipment> findAll(int page, int size) {
+        return equipmentRepository.findAll(page, size);
     }
 
     public Equipment findBySerial(String serial) {

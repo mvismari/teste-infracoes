@@ -40,8 +40,7 @@ public class EquipmentsController {
             @PageParam int page,
             @SizeParam int size
                                                   ) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Equipment> equipments = equipmentsService.findAll(pageable);
+        Page<Equipment> equipments = equipmentsService.findAll(page, size);
         return ResponseEntity.ok(equipments);
     }
 

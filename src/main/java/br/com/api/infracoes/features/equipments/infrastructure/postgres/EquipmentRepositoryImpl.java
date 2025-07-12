@@ -4,6 +4,7 @@ import br.com.api.infracoes.features.equipments.domain.Equipment;
 import br.com.api.infracoes.features.equipments.domain.EquipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +30,8 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     }
 
     @Override
-    public Page<Equipment> findAll(Pageable pageable) {
+    public Page<Equipment> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return equipmentJpaRepository.findAll(pageable).map(mapperJpa::toDomain);
     }
 
