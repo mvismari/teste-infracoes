@@ -1,9 +1,9 @@
 package br.com.api.infracoes.features.equipments.controller;
 
 import br.com.api.infracoes.features.equipments.annotations.SerialParam;
-import br.com.api.infracoes.features.equipments.annotations.docs.DocSwaggerFindAll;
-import br.com.api.infracoes.features.equipments.annotations.docs.DocSwaggerFindBySerial;
-import br.com.api.infracoes.features.equipments.annotations.docs.DocSwaggerSave;
+import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentFindAll;
+import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentFindBySerial;
+import br.com.api.infracoes.docs.swagger.DocSwaggerEquipamentSave;
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
 import br.com.api.infracoes.features.equipments.domain.Equipment;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
@@ -25,7 +25,7 @@ public class EquipmentsController {
 
     private final EquipmentsService equipmentsService;
 
-    @DocSwaggerSave
+    @DocSwaggerEquipamentSave
     @PostMapping
     public ResponseEntity<Void> save(
             @RequestBody @Valid CreateEquipmentRequestDto equipmentRequestDto
@@ -34,7 +34,7 @@ public class EquipmentsController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DocSwaggerFindAll
+    @DocSwaggerEquipamentFindAll
     @GetMapping
     public ResponseEntity<Page<Equipment>> findAll(
             @PageParam int page,
@@ -45,7 +45,7 @@ public class EquipmentsController {
         return ResponseEntity.ok(equipments);
     }
 
-    @DocSwaggerFindBySerial
+    @DocSwaggerEquipamentFindBySerial
     @GetMapping(path = "/{serial}")
     public ResponseEntity<Equipment> findBySerial(@PathVariable @SerialParam String serial) {
         Equipment equipment = equipmentsService.findBySerial(serial);
