@@ -2,6 +2,7 @@ package br.com.api.infracoes.features.violations.controller;
 
 import br.com.api.infracoes.features.violations.application.ViolationsService;
 import br.com.api.infracoes.features.violations.dto.CreateViolationRequestDto;
+import br.com.api.infracoes.shared.domain.entities.Violation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,12 @@ public class ViolationsController {
                                     ) throws IOException {
         violationsService.save(violationRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Violation> findById(@PathVariable Long id) {
+        Violation violation = violationsService.findById(id);
+        return ResponseEntity.ok(violation);
     }
 
 }

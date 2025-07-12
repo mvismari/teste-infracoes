@@ -19,6 +19,14 @@ public class ViolationRepositoryImpl implements ViolationRepository {
         return saved.getId();
     }
 
+    @Override
+    public Violation findById(Long id) {
+        return violationJpaRepository
+                .findById(id)
+                .map(violationMapperJpa::toDomain)
+                .orElse(null);
+    }
+
     /*
     @Override
     public Equipment findBySerial(String serial) {

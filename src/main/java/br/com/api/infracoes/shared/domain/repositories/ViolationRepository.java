@@ -4,7 +4,7 @@ import br.com.api.infracoes.shared.domain.entities.Violation;
 
 public interface ViolationRepository {
     Long save(Violation violation);
-    //Equipment findBySerial(String serial);
+    Violation findById(Long id);
     //Page<Equipment> findAll(int page, int size);
 
 }

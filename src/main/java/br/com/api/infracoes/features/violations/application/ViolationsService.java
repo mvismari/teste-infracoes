@@ -6,6 +6,7 @@ import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.shared.domain.entities.Violation;
 import br.com.api.infracoes.shared.domain.repositories.ViolationRepository;
 import br.com.api.infracoes.features.violations.dto.CreateViolationRequestDto;
+import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
 import br.com.api.infracoes.shared.util.FileStorageService;
 import br.com.api.infracoes.shared.util.HeaderService;
 import br.com.api.infracoes.shared.util.MessageService;
@@ -42,6 +43,13 @@ public class ViolationsService {
 
         Long id = violationRepository.save(violation);
         headerService.setHeader("Location", "/violations/" + id);
+    }
+
+    public Violation findById(Long id) {
+        Violation violation = violationRepository.findById(id);
+        if(null == violation)
+            throw new NotFoundErrorException(messageSource.get("violation.error.notfound"));
+        return violation;
     }
 
 }
