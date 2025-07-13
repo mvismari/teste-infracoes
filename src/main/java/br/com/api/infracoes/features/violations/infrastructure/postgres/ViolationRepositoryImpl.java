@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,21 +39,23 @@ public class ViolationRepositoryImpl implements ViolationRepository {
     @Override
     public Page<Violation> findAll(ViolationFiltersRequestDto violationFiltersRequestDto, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Specification<ViolationEntity> spec = createSpecification(violationFiltersRequestDto.from(), violationFiltersRequestDto.to());
+        Specification<ViolationEntity> spec = createSpecification(violationFiltersRequestDto);
         return violationJpaRepository.findAll(spec, pageable).map(violationMapperJpa::toDomain);
     }
 
 
-    private Specification<ViolationEntity> createSpecification(OffsetDateTime from, OffsetDateTime to) {
+    private Specification<ViolationEntity> createSpecification(ViolationFiltersRequestDto violationFiltersRequestDto) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (from != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("occurrenceDate"), from));
+            predicates.add(criteriaBuilder.equal(root.get("equipmentsSerialId"), violationFiltersRequestDto.serial()));
+
+            if ( violationFiltersRequestDto.from() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("occurrenceDate"), violationFiltersRequestDto.from()));
             }
 
-            if (to != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("occurrenceDate"), to));
+            if ( violationFiltersRequestDto.to() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("occurrenceDate"), violationFiltersRequestDto.to()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
