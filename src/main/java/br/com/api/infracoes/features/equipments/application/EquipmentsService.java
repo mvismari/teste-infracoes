@@ -5,7 +5,7 @@ import br.com.api.infracoes.shared.domain.repositories.EquipmentRepository;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
 import br.com.api.infracoes.features.equipments.exceptions.EquipmentExistsException;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
-import br.com.api.infracoes.shared.util.MessageService;
+import br.com.api.infracoes.shared.util.MessageHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ public class EquipmentsService {
 
     private final EquipmentRepository equipmentRepository;
     private final ObjectMapper objectMapper;
-    private final MessageService messageSource;
+    private final MessageHelper messageSource;
 
     public void save(CreateEquipmentRequestDto equipmentDto) {
         if (null != equipmentRepository.findBySerial(equipmentDto.getSerial())) {

@@ -6,7 +6,7 @@ import br.com.api.infracoes.shared.domain.repositories.EquipmentRepository;
 import br.com.api.infracoes.features.equipments.dto.CreateEquipmentRequestDto;
 import br.com.api.infracoes.features.equipments.exceptions.EquipmentExistsException;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
-import br.com.api.infracoes.shared.util.MessageService;
+import br.com.api.infracoes.shared.util.MessageHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ public class EquipmentsServiceTest {
     private EquipmentRepository equipmentRepository;
 
     @Mock
-    private MessageService messageSource;
+    private MessageHelper messageSource;
 
     @Mock
     private ObjectMapper objectMapper;

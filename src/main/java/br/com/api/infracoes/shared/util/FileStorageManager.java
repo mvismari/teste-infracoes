@@ -1,7 +1,7 @@
 package br.com.api.infracoes.shared.util;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
-@Service
-public class FileStorageService {
+@Component
+public class FileStorageManager {
 
     @Value("${app.upload.dir}")
     private String uploadDir;

@@ -8,9 +8,9 @@ import br.com.api.infracoes.shared.domain.entities.Violation;
 import br.com.api.infracoes.shared.domain.repositories.ViolationRepository;
 import br.com.api.infracoes.features.violations.dto.CreateViolationRequestDto;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
-import br.com.api.infracoes.shared.util.FileStorageService;
-import br.com.api.infracoes.shared.util.HeaderService;
-import br.com.api.infracoes.shared.util.MessageService;
+import br.com.api.infracoes.shared.util.FileStorageManager;
+import br.com.api.infracoes.shared.util.HeaderHelper;
+import br.com.api.infracoes.shared.util.MessageHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,9 +27,9 @@ public class ViolationsService {
     private final ViolationRepository violationRepository;
 
     private final ObjectMapper objectMapper;
-    private final MessageService messageSource;
-    private final HeaderService headerService;
-    private final FileStorageService fileStorageService;
+    private final MessageHelper messageSource;
+    private final HeaderHelper headerHelper;
+    private final FileStorageManager fileStorageManager;
 
     public void save(CreateViolationRequestDto violationDto) throws IOException {
         Equipment equipment = equipmentsService.findBySerial(violationDto.getSerial());
@@ -37,14 +37,14 @@ public class ViolationsService {
             throw new ViolationNotActiveException(messageSource.get("violation.error.equip.inactive"));
         }
 
-        String pictureUrl = fileStorageService.storeFile(violationDto.getPicture());
+        String pictureUrl = fileStorageManager.storeFile(violationDto.getPicture());
 
         Violation violation = objectMapper.convertValue(violationDto, Violation.class);
         violation.setOccurrenceDateUtc(OffsetDateTime.parse(violationDto.getOccurrenceDateUtc()));
         violation.setPicture(pictureUrl);
 
         Long id = violationRepository.save(violation);
-        headerService.setHeader("Location", "/violations/" + id);
+        headerHelper.setHeader("Location", "/violations/" + id);
     }
 
     public Violation findById(Long id) {

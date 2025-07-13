@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HeaderService {
+public class HeaderHelper {
 
     private final HttpServletRequest request;
     private final HttpServletResponse httpServletResponse;

@@ -9,9 +9,9 @@ import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.shared.domain.entities.Violation;
 import br.com.api.infracoes.shared.domain.repositories.ViolationRepository;
 import br.com.api.infracoes.shared.exceptions.NotFoundErrorException;
-import br.com.api.infracoes.shared.util.FileStorageService;
-import br.com.api.infracoes.shared.util.HeaderService;
-import br.com.api.infracoes.shared.util.MessageService;
+import br.com.api.infracoes.shared.util.FileStorageManager;
+import br.com.api.infracoes.shared.util.HeaderHelper;
+import br.com.api.infracoes.shared.util.MessageHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,13 +51,13 @@ public class ViolationsServiceTest {
     private ObjectMapper objectMapper;
 
     @Mock
-    private MessageService messageSource;
+    private MessageHelper messageSource;
 
     @Mock
-    private HeaderService headerService;
+    private HeaderHelper headerHelper;
 
     @Mock
-    private FileStorageService fileStorageService;
+    private FileStorageManager fileStorageManager;
 
     @Mock
     private MultipartFile mockFile;
@@ -94,7 +94,7 @@ public class ViolationsServiceTest {
         OffsetDateTime expectedOccurrenceDate = OffsetDateTime.parse("2024-01-15T10:30:00Z");
 
         when(equipmentsService.findBySerial(violationDto.getSerial())).thenReturn(activeEquipment);
-        when(fileStorageService.storeFile(mockFile)).thenReturn(expectedPictureUrl);
+        when(fileStorageManager.storeFile(mockFile)).thenReturn(expectedPictureUrl);
         when(objectMapper.convertValue(violationDto, Violation.class)).thenReturn(violation);
         when(violationRepository.save(any(Violation.class))).thenReturn(expectedViolationId);
 
@@ -107,9 +107,9 @@ public class ViolationsServiceTest {
         assertEquals(expectedPictureUrl, savedViolation.getPicture());
         assertEquals(expectedOccurrenceDate, savedViolation.getOccurrenceDateUtc());
 
-        verify(headerService).setHeader("Location", "/violations/" + expectedViolationId);
+        verify(headerHelper).setHeader("Location", "/violations/" + expectedViolationId);
         verify(equipmentsService).findBySerial(violationDto.getSerial());
-        verify(fileStorageService).storeFile(mockFile);
+        verify(fileStorageManager).storeFile(mockFile);
         verify(objectMapper).convertValue(violationDto, Violation.class);
     }
 
@@ -129,9 +129,9 @@ public class ViolationsServiceTest {
 
         verify(equipmentsService).findBySerial(violationDto.getSerial());
         verify(messageSource).get("violation.error.equip.inactive");
-        verifyNoInteractions(fileStorageService);
+        verifyNoInteractions(fileStorageManager);
         verifyNoInteractions(violationRepository);
-        verifyNoInteractions(headerService);
+        verifyNoInteractions(headerHelper);
         verifyNoInteractions(objectMapper);
     }
 
@@ -141,7 +141,7 @@ public class ViolationsServiceTest {
 
         IOException fileStorageException = new IOException("Falha ao salvar a imagem");
         when(equipmentsService.findBySerial(violationDto.getSerial())).thenReturn(activeEquipment);
-        when(fileStorageService.storeFile(mockFile)).thenThrow(fileStorageException);
+        when(fileStorageManager.storeFile(mockFile)).thenThrow(fileStorageException);
 
         IOException exception = assertThrows(
                 IOException.class,
@@ -151,9 +151,9 @@ public class ViolationsServiceTest {
         assertEquals("Falha ao salvar a imagem", exception.getMessage());
 
         verify(equipmentsService).findBySerial(violationDto.getSerial());
-        verify(fileStorageService).storeFile(mockFile);
+        verify(fileStorageManager).storeFile(mockFile);
         verifyNoInteractions(violationRepository);
-        verifyNoInteractions(headerService);
+        verifyNoInteractions(headerHelper);
         verifyNoInteractions(objectMapper);
     }
 

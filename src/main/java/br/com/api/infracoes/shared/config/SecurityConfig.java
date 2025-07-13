@@ -22,9 +22,9 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/uploads/**", "/violations", "/violations/**", "/equipments", "/equipments/**", "/error", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**").permitAll());
-                       /* .anyRequest().authenticated())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
+                                               .anyRequest().permitAll()
+                                      );
+
         return http.build();
     }
 
