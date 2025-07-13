@@ -1,4 +1,4 @@
-package br.com.api.infracoes.unit.features.equipments.web;
+package br.com.api.infracoes.unit.features.equipments.controller;
 
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
 import br.com.api.infracoes.shared.domain.entities.Equipment;

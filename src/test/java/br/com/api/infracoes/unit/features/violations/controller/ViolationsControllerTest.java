@@ -1,4 +1,4 @@
-package br.com.api.infracoes.unit.features.violations.web;
+package br.com.api.infracoes.unit.features.violations.controller;
 
 import br.com.api.infracoes.features.violations.application.ViolationsService;
 import br.com.api.infracoes.features.violations.controller.ViolationsController;
