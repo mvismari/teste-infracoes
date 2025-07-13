@@ -1,6 +1,7 @@
 package br.com.api.infracoes.features.violations.application;
 
 import br.com.api.infracoes.features.equipments.application.EquipmentsService;
+import br.com.api.infracoes.features.violations.dto.ViolationFiltersRequestDto;
 import br.com.api.infracoes.features.violations.exceptions.ViolationNotActiveException;
 import br.com.api.infracoes.shared.domain.entities.Equipment;
 import br.com.api.infracoes.shared.domain.entities.Violation;
@@ -12,6 +13,7 @@ import br.com.api.infracoes.shared.util.HeaderService;
 import br.com.api.infracoes.shared.util.MessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -47,9 +49,14 @@ public class ViolationsService {
 
     public Violation findById(Long id) {
         Violation violation = violationRepository.findById(id);
-        if(null == violation)
+        if (null == violation)
             throw new NotFoundErrorException(messageSource.get("violation.error.notfound"));
         return violation;
+    }
+
+    public Page<Violation> findAll(ViolationFiltersRequestDto violationFiltersRequestDto, int page, int size) {
+        equipmentsService.findBySerial(violationFiltersRequestDto.serial());
+        return violationRepository.findAll(violationFiltersRequestDto, page, size);
     }
 
 }

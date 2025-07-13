@@ -14,15 +14,12 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                              .title("User Management API")
-                              .description("A simple API for managing users")
+                              .title("Infrações - API")
+                              .description("API para gerenciamento de equipamentos e infrações.")
                               .version("1.0.0")
                               .contact(new Contact()
-                                               .name("API Support")
-                                               .email("support@example.com")
-                                               .url("https://example.com"))
-                              .license(new License()
-                                               .name("MIT License")
-                                               .url("https://opensource.org/licenses/MIT")));
+                                               .name("Responsável:")
+                                               .email("marlon.vismari@gmail.com"))
+                     );
     }
 }

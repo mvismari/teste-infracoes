@@ -1,9 +1,19 @@
 package br.com.api.infracoes.features.violations.infrastructure.postgres;
 
+import br.com.api.infracoes.features.violations.dto.ViolationFiltersRequestDto;
 import br.com.api.infracoes.shared.domain.entities.Violation;
 import br.com.api.infracoes.shared.domain.repositories.ViolationRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -27,20 +37,28 @@ public class ViolationRepositoryImpl implements ViolationRepository {
                 .orElse(null);
     }
 
-    /*
     @Override
-    public Equipment findBySerial(String serial) {
-        return equipmentJpaRepository
-                .findById(serial)
-                .map(mapperJpa::toDomain)
-                .orElse(null);
-    }
-
-    @Override
-    public Page<Equipment> findAll(int page, int size) {
+    public Page<Violation> findAll(ViolationFiltersRequestDto violationFiltersRequestDto, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return equipmentJpaRepository.findAll(pageable).map(mapperJpa::toDomain);
+        Specification<ViolationEntity> spec = createSpecification(violationFiltersRequestDto.from(), violationFiltersRequestDto.to());
+        return violationJpaRepository.findAll(spec, pageable).map(violationMapperJpa::toDomain);
     }
 
-*/
+
+    private Specification<ViolationEntity> createSpecification(OffsetDateTime from, OffsetDateTime to) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (from != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("occurrenceDate"), from));
+            }
+
+            if (to != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("occurrenceDate"), to));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
 }
