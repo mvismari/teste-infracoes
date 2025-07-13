@@ -1,0 +1,51 @@
+services:
+  # PostgreSQL Database
+  infracoes-db-postgres:
+    image: postgres:14.18
+    container_name: teste-infracoes-db-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: infracoes
+    ports:
+      - "8000:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - infracoes-network
+
+  # Spring Boot Application
+  infracoes-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: teste-infracoes-app
+    ports:
+      - "5005:5005"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://teste-infracoes-db-postgres:5432/infracoes
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=false
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SERVER_PORT=5005
+      - JWT_PRIVATEKEY=2ebcff73-3877-4af1-849d-bceb6d272c4f
+    depends_on:
+      - infracoes-db-postgres
+    networks:
+      - infracoes-network
+    volumes:
+      - app_logs:/app/logs
+
+volumes:
+  postgres_data:
+    driver: local
+  app_logs:
+    driver: local
+
+networks:
+  infracoes-network:
+    driver: bridge

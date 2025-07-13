@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     @Value("${jwt.secret}")
@@ -34,6 +36,9 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestPath = request.getRequestURI();
+
+        log.info("Processing request: {}", requestPath);
+        log.debug("Requires auth: {}", requiresAuth(requestPath));
 
         if (requiresAuth(requestPath)) {
             String header = request.getHeader("Authorization");
