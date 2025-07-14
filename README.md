@@ -29,14 +29,15 @@ mvn jacoco:report
 
 # Rode o comando abaixo para subir os containers
 docker compose up —build
+
+# Para acessar o Swagger
+http://localhost:5005/swagger-ui.html
+
 ```
 
 ---
 
 ## Endpoints principais
-
-Swagger:
-- [GET] http://localhost:5005/swagger-ui.html
 
 Auth:
 - [GET] http://localhost:5005/auth
