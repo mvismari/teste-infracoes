@@ -64,7 +64,7 @@ Violations:
 
       3.1 Equipamentos não possuem atualização frequente, poderíamos manter;
 
-      3.2 Infrações poderia manter os arquivos no NFS e as informações serem enviadas para uma fila (SQS, RabbitMQ ou Kafka) para não exceder a capacidade do banco (conexões e IO);
+      3.2 Infrações poderiam serem mantidas nos arquivos usando EFS e as informações serem enviadas para uma fila (SQS, RabbitMQ ou Kafka) para não exceder a capacidade do banco (conexões e IO);
 
       3.3 Ainda existe a possibilidade de gerar um link dinamicamente diretamente de um serviço de nuvem (S3 ou Cloud Storage) para o upload acontecer diretamente no storage da nuvem. Dessa forma a infração só receberia a url da PICTURE;
 
